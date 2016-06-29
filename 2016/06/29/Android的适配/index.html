@@ -85,31 +85,34 @@
 
 
 <meta name="description" content="公司周分享的内容  
+
 适配的根源
 in（Inches）不同。不同手机屏幕尺寸大小不同。
 dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
 density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypop">
+获取dpi和density的方法参见：Lollypo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android的适配">
 <meta property="og:url" content="https://beyondbright.github.io/2016/06/29/Android的适配/index.html">
 <meta property="og:site_name" content="beyondbright's blog">
 <meta property="og:description" content="公司周分享的内容  
+
 适配的根源
 in（Inches）不同。不同手机屏幕尺寸大小不同。
 dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
 density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypop">
+获取dpi和density的方法参见：Lollypo">
 <meta property="og:image" content="http://o8nhgt9v5.bkt.clouddn.com/res.png">
-<meta property="og:updated_time" content="2016-06-29T14:53:33.000Z">
+<meta property="og:updated_time" content="2016-06-29T14:55:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android的适配">
 <meta name="twitter:description" content="公司周分享的内容  
+
 适配的根源
 in（Inches）不同。不同手机屏幕尺寸大小不同。
 dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
 density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypop">
+获取dpi和density的方法参见：Lollypo">
 <meta name="twitter:image" content="http://o8nhgt9v5.bkt.clouddn.com/res.png">
 
 
@@ -351,6 +354,7 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
       
         <blockquote>
 <p>公司周分享的内容  </p>
+</blockquote>
 <h2 id="适配的根源"><a href="#适配的根源" class="headerlink" title="适配的根源"></a>适配的根源</h2><ul>
 <li>in（Inches）不同。<br>不同手机屏幕尺寸大小不同。</li>
 <li>dpi（Dots per inch）不同。<br>每英寸可显示的像素个数不同。</li>
@@ -358,7 +362,6 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
 <li>获取dpi和density的方法参见：LollypopActivity.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showMetrics</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  DisplayMetrics metrics = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">  getWindowManager().getDefaultDisplay().getMetrics(metrics);</span><br><span class="line">  String msg = <span class="string">"屏幕DPI : "</span> + metrics.densityDpi + <span class="string">"("</span> + metrics.density + <span class="string">")"</span></span><br><span class="line">      + <span class="string">" , 屏幕宽 : "</span> + metrics.widthPixels + <span class="string">" , 屏幕长 : "</span> + metrics.heightPixels;</span><br><span class="line">  Toast.makeText(<span class="keyword">this</span>, msg, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</blockquote>
 <h2 id="Android上支持的尺寸"><a href="#Android上支持的尺寸" class="headerlink" title="Android上支持的尺寸"></a>Android上支持的尺寸</h2><ul>
 <li><strong>dp（dip）</strong><br>Density-independent Pixels - An abstract unit that is based on the physical density of the screen.<br>Android特有的单位，在dpi = 160屏幕上，1dp = 1px。</li>
 <li><strong>sp</strong><br>Scale-independent Pixels - This is like the dp unit, but it is also scaled by the user’s font size preference.<br>跟dp差不过，唯一区别是会根据用户设置的字体偏好来。</li>
