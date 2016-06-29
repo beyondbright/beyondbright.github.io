@@ -84,36 +84,22 @@
 
 
 
-<meta name="description" content="公司周分享的内容  
+<meta name="description" content="经过上一篇的流程分析，”万视（图）俱备，只欠呈现”了。这一篇就讲讲这个view是怎么一步步展现出来。
 
-适配的根源
-in（Inches）不同。不同手机屏幕尺寸大小不同。
-dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
-density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypo">
+onResumeview在onCreate中调用setContentView方法已经设置好了样式，并将所有子view都通过循环遍历xml文件加载到了decorView（根视图）中，根视图在onResume方法中展示出来，请看源码。123456789101112131415161718192021">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android的适配">
-<meta property="og:url" content="https://beyondbright.github.io/2016/06/29/Android的适配/index.html">
+<meta property="og:title" content="从源码看View的绘制(二)">
+<meta property="og:url" content="https://beyondbright.github.io/2016/06/29/从源码看View的绘制二/index.html">
 <meta property="og:site_name" content="beyondbright's blog">
-<meta property="og:description" content="公司周分享的内容  
+<meta property="og:description" content="经过上一篇的流程分析，”万视（图）俱备，只欠呈现”了。这一篇就讲讲这个view是怎么一步步展现出来。
 
-适配的根源
-in（Inches）不同。不同手机屏幕尺寸大小不同。
-dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
-density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypo">
-<meta property="og:image" content="http://o8nhgt9v5.bkt.clouddn.com/res.png">
-<meta property="og:updated_time" content="2016-06-29T14:57:44.000Z">
+onResumeview在onCreate中调用setContentView方法已经设置好了样式，并将所有子view都通过循环遍历xml文件加载到了decorView（根视图）中，根视图在onResume方法中展示出来，请看源码。123456789101112131415161718192021">
+<meta property="og:updated_time" content="2016-06-29T15:18:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android的适配">
-<meta name="twitter:description" content="公司周分享的内容  
+<meta name="twitter:title" content="从源码看View的绘制(二)">
+<meta name="twitter:description" content="经过上一篇的流程分析，”万视（图）俱备，只欠呈现”了。这一篇就讲讲这个view是怎么一步步展现出来。
 
-适配的根源
-in（Inches）不同。不同手机屏幕尺寸大小不同。
-dpi（Dots per inch）不同。每英寸可显示的像素个数不同。
-density。直译是密度，density = dpi/160。density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  
-获取dpi和density的方法参见：Lollypo">
-<meta name="twitter:image" content="http://o8nhgt9v5.bkt.clouddn.com/res.png">
+onResumeview在onCreate中调用setContentView方法已经设置好了样式，并将所有子view都通过循环遍历xml文件加载到了decorView（根视图）中，根视图在onResume方法中展示出来，请看源码。123456789101112131415161718192021">
 
 
 
@@ -134,9 +120,9 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
 
 
 
-  <link rel="canonical" href="https://beyondbright.github.io/2016/06/29/Android的适配/"/>
+  <link rel="canonical" href="https://beyondbright.github.io/2016/06/29/从源码看View的绘制二/"/>
 
-  <title> Android的适配 | beyondbright's blog </title>
+  <title> 从源码看View的绘制(二) | beyondbright's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -296,7 +282,7 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
             
             
               
-                Android的适配
+                从源码看View的绘制(二)
               
             
           </h1>
@@ -308,7 +294,7 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-29T00:38:50+08:00" content="2016-06-29">
+            <time itemprop="dateCreated" datetime="2016-06-29T23:08:36+08:00" content="2016-06-29">
               2016-06-29
             </time>
           </span>
@@ -319,8 +305,8 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/29/Android的适配/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/Android的适配/" itemprop="commentsCount"></span>
+                <a href="/2016/06/29/从源码看View的绘制二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/从源码看View的绘制二/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -330,7 +316,7 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
 
           
           
-             <span id="/2016/06/29/Android的适配/" class="leancloud_visitors" data-flag-title="Android的适配">
+             <span id="/2016/06/29/从源码看View的绘制二/" class="leancloud_visitors" data-flag-title="从源码看View的绘制(二)">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -352,28 +338,20 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
       
 
       
-        <blockquote>
-<p>公司周分享的内容  </p>
-</blockquote>
-<h2 id="适配的根源"><a href="#适配的根源" class="headerlink" title="适配的根源"></a>适配的根源</h2><ul>
-<li>in（Inches）不同。<br>不同手机屏幕尺寸大小不同。</li>
-<li>dpi（Dots per inch）不同。<br>每英寸可显示的像素个数不同。</li>
-<li>density。<br>直译是密度，density = dpi/160。<br>density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  </li>
-<li>获取dpi和density的方法参见：LollypopActivity.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showMetrics</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  DisplayMetrics metrics = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">  getWindowManager().getDefaultDisplay().getMetrics(metrics);</span><br><span class="line">  String msg = <span class="string">"屏幕DPI : "</span> + metrics.densityDpi </span><br><span class="line">    + <span class="string">"("</span> + metrics.density + <span class="string">")"</span> </span><br><span class="line">    + <span class="string">" , 屏幕宽 : "</span> + metrics.widthPixels </span><br><span class="line">    + <span class="string">" , 屏幕长 : "</span> + metrics.heightPixels;</span><br><span class="line">  Toast.makeText(<span class="keyword">this</span>, msg, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>经过上一篇的流程分析，”万视（图）俱备，只欠呈现”了。这一篇就讲讲这个view是怎么一步步展现出来。</p>
+<ul>
+<li>onResume<br>view在<em>onCreate</em>中调用<em>setContentView</em>方法已经设置好了样式，并将所有子view都通过循环遍历xml文件加载到了<em>decorView</em>（根视图）中，根视图在<em>onResume</em>方法中展示出来，请看源码。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CallSuper</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    mActivityTransitionState.onResume();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ActivityTransitionState类中的onResume方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    restoreExitedViews();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">restoreExitedViews</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCalledExitCoordinator != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mCalledExitCoordinator.resetViews();</span><br><span class="line">        mCalledExitCoordinator = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resetViews</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    ViewGroup decorView = getDecor();</span><br><span class="line">    <span class="keyword">if</span> (!mIsReturning &amp;&amp; decorView != <span class="keyword">null</span>) &#123;</span><br><span class="line">        decorView.suppressLayout(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ViewGroup中的suppressLayout方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">suppressLayout</span><span class="params">(<span class="keyword">boolean</span> suppress)</span> </span>&#123;</span><br><span class="line">    mSuppressLayout = suppress;</span><br><span class="line">    <span class="keyword">if</span> (!suppress) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mLayoutCalledWhileSuppressed) &#123;</span><br><span class="line">            requestLayout();</span><br><span class="line">            mLayoutCalledWhileSuppressed = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="Android上支持的尺寸"><a href="#Android上支持的尺寸" class="headerlink" title="Android上支持的尺寸"></a>Android上支持的尺寸</h2><ul>
-<li><strong>dp（dip）</strong><br>Density-independent Pixels - An abstract unit that is based on the physical density of the screen.<br>Android特有的单位，在dpi = 160屏幕上，1dp = 1px。</li>
-<li><strong>sp</strong><br>Scale-independent Pixels - This is like the dp unit, but it is also scaled by the user’s font size preference.<br>跟dp差不过，唯一区别是会根据用户设置的字体偏好来。</li>
-<li>pt<br>Points - 1/72 of an inch based on the physical size of the screen.</li>
-<li>px<br>Pixels - Corresponds to actual pixels on the screen. </li>
-<li>mm<br>Millimeters - Based on the physical size of the screen.</li>
-<li>in<br>Inches - Based on the physical size of the screen.<h2 id="Android适配屏幕的一些技巧"><a href="#Android适配屏幕的一些技巧" class="headerlink" title="Android适配屏幕的一些技巧"></a>Android适配屏幕的一些技巧</h2></li>
-<li>使用 “dp” 和 “sp”</li>
-<li>使用 “wrap_content” 和 “match_parent”</li>
-<li>使用 “RelativeLayout”</li>
-<li>使用 “res” 的别名<br><img src="http://o8nhgt9v5.bkt.clouddn.com/res.png" alt=""></li>
-<li>使用xhdpi<br>drawable-ldpi (dpi=120, density=0.75)<br>drawable-mdpi (dpi=160, density=1)<br>drawable-hdpi (dpi=240, density=1.5)<br>drawable-xhdpi (dpi=320, density=2)<br>drawable-xxhdpi (dpi=480, density=3)<br>完全从适配角度来说，每种dpi都出一套图是最完美的，实际不可能，美工设计的工作量太大，导出的APK包也会太大。<br>解决方案是出一套1080*720的图，放到xhdpi下。Android虚拟机会根据设备dpi删除冲突的图，并选择匹配dpi的图，没有匹配的图，会找到最接近的dpi的图并按照比例进行缩放。根据现在市面上手机dpi大部分还是320，所以选择xhdpi。</li>
+<p>可以发现其实<em>onResume</em>在最后调用了<em>decorView</em>的<em>requestLayout</em>方法</p>
+<ul>
+<li>requestLayout<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">requestLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!mHandlingLayoutInLayoutRequest) &#123;</span><br><span class="line">        checkThread();</span><br><span class="line">        mLayoutRequested = <span class="keyword">true</span>;</span><br><span class="line">        scheduleTraversals();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">scheduleTraversals</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!mTraversalScheduled) &#123;</span><br><span class="line">        mTraversalScheduled = <span class="keyword">true</span>;</span><br><span class="line">        mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();</span><br><span class="line">        </span><br><span class="line">       <span class="comment">//postCallback官方注释：Posts a callback to run on the next frame.</span></span><br><span class="line">        mChoreographer.postCallback(</span><br><span class="line">                Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!mUnbufferedInputDispatch) &#123;</span><br><span class="line">            scheduleConsumeBatchedInput();</span><br><span class="line">        &#125;</span><br><span class="line">        notifyRendererOfFramePending();</span><br><span class="line">        pokeDrawLockIfNeeded();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TraversalRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        doTraversal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> TraversalRunnable mTraversalRunnable = <span class="keyword">new</span> TraversalRunnable();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doTraversal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mTraversalScheduled) &#123;</span><br><span class="line">        ...</span><br><span class="line">        performTraversals();</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">performTraversals</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// This is called to find out how big a view should be.</span></span><br><span class="line">    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Assign a size and position to a view and all of its descendants</span></span><br><span class="line">    performLayout(lp, desiredWindowWidth, desiredWindowHeight);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Manually render this view (and all of its children) to the given Canvas.</span></span><br><span class="line">    performDraw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>从源码中看出，Android的界面的展示依然遵循两个原则：</p>
+<ul>
+<li>从根视图开始递归画到画布上</li>
+<li>画图三步走，measure、layout、draw</li>
 </ul>
 
       
@@ -405,17 +383,13 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/12/Android-studio-设置/" rel="next" title="Android Studio 设置">
-                <i class="fa fa-chevron-left"></i> Android Studio 设置
+              <a href="/2016/06/29/从源码看View的绘制/" rel="next" title="从源码看View的绘制(一)">
+                <i class="fa fa-chevron-left"></i> 从源码看View的绘制(一)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/29/从源码看View的绘制/" rel="prev" title="从源码看View的绘制(一)">
-                从源码看View的绘制(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -430,10 +404,10 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/29/Android的适配/"
-     data-title="Android的适配"
+        <div class="ds-share flat" data-thread-key="2016/06/29/从源码看View的绘制二/"
+     data-title="从源码看View的绘制(二)"
      data-content=""
-     data-url="https://beyondbright.github.io/2016/06/29/Android的适配/">
+     data-url="https://beyondbright.github.io/2016/06/29/从源码看View的绘制二/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -460,8 +434,8 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/29/Android的适配/"
-           data-title="Android的适配" data-url="https://beyondbright.github.io/2016/06/29/Android的适配/">
+      <div class="ds-thread" data-thread-key="2016/06/29/从源码看View的绘制二/"
+           data-title="从源码看View的绘制(二)" data-url="https://beyondbright.github.io/2016/06/29/从源码看View的绘制二/">
       </div>
     
   </div>
@@ -579,7 +553,7 @@ density。直译是密度，density = dpi/160。density是一个比例值，而�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#适配的根源"><span class="nav-number">1.</span> <span class="nav-text">适配的根源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android上支持的尺寸"><span class="nav-number">2.</span> <span class="nav-text">Android上支持的尺寸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android适配屏幕的一些技巧"><span class="nav-number">3.</span> <span class="nav-text">Android适配屏幕的一些技巧</span></a></li></ol></div>
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
             
           </div>
         </section>

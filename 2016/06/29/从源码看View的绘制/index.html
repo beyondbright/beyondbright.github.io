@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -84,15 +84,22 @@
 
 
 
-<meta name="description" content="人的一生中，最令人感慨的，往往是心灵上无法言喻的感动">
-<meta property="og:type" content="website">
-<meta property="og:title" content="beyondbright's blog">
-<meta property="og:url" content="https://beyondbright.github.io/index.html">
+<meta name="description" content="View的绘制从头说起，这个头就是Activity里的setContentView方法
+
+setContentView(int layoutResId)一般我们都是在Activity的onCreate方法里调用setContentView方法，传入layout的id，就可以显示对应的布局了。123456789101112131415161718192021/** * Set the activit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从源码看View的绘制(一)">
+<meta property="og:url" content="https://beyondbright.github.io/2016/06/29/从源码看View的绘制/index.html">
 <meta property="og:site_name" content="beyondbright's blog">
-<meta property="og:description" content="人的一生中，最令人感慨的，往往是心灵上无法言喻的感动">
+<meta property="og:description" content="View的绘制从头说起，这个头就是Activity里的setContentView方法
+
+setContentView(int layoutResId)一般我们都是在Activity的onCreate方法里调用setContentView方法，传入layout的id，就可以显示对应的布局了。123456789101112131415161718192021/** * Set the activit">
+<meta property="og:updated_time" content="2016-06-29T15:07:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="beyondbright's blog">
-<meta name="twitter:description" content="人的一生中，最令人感慨的，往往是心灵上无法言喻的感动">
+<meta name="twitter:title" content="从源码看View的绘制(一)">
+<meta name="twitter:description" content="View的绘制从头说起，这个头就是Activity里的setContentView方法
+
+setContentView(int layoutResId)一般我们都是在Activity的onCreate方法里调用setContentView方法，传入layout的id，就可以显示对应的布局了。123456789101112131415161718192021/** * Set the activit">
 
 
 
@@ -113,9 +120,9 @@
 
 
 
-  <link rel="canonical" href="https://beyondbright.github.io/"/>
+  <link rel="canonical" href="https://beyondbright.github.io/2016/06/29/从源码看View的绘制/"/>
 
-  <title> beyondbright's blog </title>
+  <title> 从源码看View的绘制(一) | beyondbright's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -146,9 +153,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -255,9 +260,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -277,134 +282,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/06/29/从源码看View的绘制二/" itemprop="url">
-                  从源码看View的绘制(二)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-29T23:08:36+08:00" content="2016-06-29">
-              2016-06-29
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/29/从源码看View的绘制二/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/从源码看View的绘制二/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/29/从源码看View的绘制二/" class="leancloud_visitors" data-flag-title="从源码看View的绘制(二)">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>经过上一篇的流程分析，”万视（图）俱备，只欠呈现”了。这一篇就讲讲这个view是怎么一步步展现出来。</p>
-<ul>
-<li>onResume<br>view在<em>onCreate</em>中调用<em>setContentView</em>方法已经设置好了样式，并将所有子view都通过循环遍历xml文件加载到了<em>decorView</em>（根视图）中，根视图在<em>onResume</em>方法中展示出来，请看源码。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@CallSuper</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    mActivityTransitionState.onResume();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ActivityTransitionState类中的onResume方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    restoreExitedViews();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">restoreExitedViews</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mCalledExitCoordinator != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mCalledExitCoordinator.resetViews();</span><br><span class="line">        mCalledExitCoordinator = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resetViews</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    ViewGroup decorView = getDecor();</span><br><span class="line">    <span class="keyword">if</span> (!mIsReturning &amp;&amp; decorView != <span class="keyword">null</span>) &#123;</span><br><span class="line">        decorView.suppressLayout(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ViewGroup中的suppressLayout方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">suppressLayout</span><span class="params">(<span class="keyword">boolean</span> suppress)</span> </span>&#123;</span><br><span class="line">    mSuppressLayout = suppress;</span><br><span class="line">    <span class="keyword">if</span> (!suppress) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mLayoutCalledWhileSuppressed) &#123;</span><br><span class="line">            requestLayout();</span><br><span class="line">            mLayoutCalledWhileSuppressed = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可以发现其实<em>onResume</em>在最后调用了<em>decorView</em>的<em>requestLayout</em>方法</p>
-<ul>
-<li>requestLayout<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">requestLayout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!mHandlingLayoutInLayoutRequest) &#123;</span><br><span class="line">        checkThread();</span><br><span class="line">        mLayoutRequested = <span class="keyword">true</span>;</span><br><span class="line">        scheduleTraversals();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">scheduleTraversals</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!mTraversalScheduled) &#123;</span><br><span class="line">        mTraversalScheduled = <span class="keyword">true</span>;</span><br><span class="line">        mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();</span><br><span class="line">        </span><br><span class="line">       <span class="comment">//postCallback官方注释：Posts a callback to run on the next frame.</span></span><br><span class="line">        mChoreographer.postCallback(</span><br><span class="line">                Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!mUnbufferedInputDispatch) &#123;</span><br><span class="line">            scheduleConsumeBatchedInput();</span><br><span class="line">        &#125;</span><br><span class="line">        notifyRendererOfFramePending();</span><br><span class="line">        pokeDrawLockIfNeeded();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">TraversalRunnable</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        doTraversal();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> TraversalRunnable mTraversalRunnable = <span class="keyword">new</span> TraversalRunnable();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">doTraversal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mTraversalScheduled) &#123;</span><br><span class="line">        ...</span><br><span class="line">        performTraversals();</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">performTraversals</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// This is called to find out how big a view should be.</span></span><br><span class="line">    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Assign a size and position to a view and all of its descendants</span></span><br><span class="line">    performLayout(lp, desiredWindowWidth, desiredWindowHeight);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// Manually render this view (and all of its children) to the given Canvas.</span></span><br><span class="line">    performDraw();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>从源码中看出，Android的界面的展示依然遵循两个原则：</p>
-<ul>
-<li>从根视图开始递归画到画布上</li>
-<li>画图三步走，measure、layout、draw</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/29/从源码看View的绘制/" itemprop="url">
-                  从源码看View的绘制(一)
-                </a>
+                从源码看View的绘制(一)
               
             
           </h1>
@@ -460,9 +338,7 @@
       
 
       
-        
-          
-            <p>View的绘制从头说起，这个头就是Activity里的setContentView方法</p>
+        <p>View的绘制从头说起，这个头就是Activity里的setContentView方法</p>
 <ul>
 <li>setContentView(int layoutResId)<br>一般我们都是在Activity的onCreate方法里调用setContentView方法，传入layout的id，就可以显示对应的布局了。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Set the activity content from a layout resource.  The resource will be</span><br><span class="line"> * inflated, adding all top-level views to the activity.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> layoutResID Resource ID to be inflated.</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@see</span> #setContentView(android.view.View)</span><br><span class="line"> * <span class="doctag">@see</span> #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span> </span>&#123;</span><br><span class="line">    getWindow().setContentView(layoutResID);</span><br><span class="line">    initWindowDecorActionBar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Window <span class="title">getWindow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mWindow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">mWindow = <span class="keyword">new</span> PhoneWindow(<span class="keyword">this</span>);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 </li>
@@ -483,449 +359,81 @@
 <p>从<em>inflate</em>方法可以看出，解析xml依然是用递归来解析，所以在写xml的时候尽可能的少嵌套，某些时候<em>Relativelayout</em>代替<em>Linearlayout</em>排版可以减少层级。</p>
 </blockquote>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/29/Android的适配/" itemprop="url">
-                  Android的适配
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-29T00:38:50+08:00" content="2016-06-29">
-              2016-06-29
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/29/Android的适配/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/29/Android的适配/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/29/Android的适配/" class="leancloud_visitors" data-flag-title="Android的适配">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
+            <a href="/tags/Android/" rel="tag">#Android</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <blockquote>
-<p>公司周分享的内容  </p>
-</blockquote>
-<h2 id="适配的根源"><a href="#适配的根源" class="headerlink" title="适配的根源"></a>适配的根源</h2><ul>
-<li>in（Inches）不同。<br>不同手机屏幕尺寸大小不同。</li>
-<li>dpi（Dots per inch）不同。<br>每英寸可显示的像素个数不同。</li>
-<li>density。<br>直译是密度，density = dpi/160。<br>density是一个比例值，而初中物理定义密度为：ρ=m/V ，单位体积的质量，感觉dpi更适合叫做（屏幕）密度。  </li>
-<li>获取dpi和density的方法参见：LollypopActivity.java<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showMetrics</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  DisplayMetrics metrics = <span class="keyword">new</span> DisplayMetrics();</span><br><span class="line">  getWindowManager().getDefaultDisplay().getMetrics(metrics);</span><br><span class="line">  String msg = <span class="string">"屏幕DPI : "</span> + metrics.densityDpi </span><br><span class="line">    + <span class="string">"("</span> + metrics.density + <span class="string">")"</span> </span><br><span class="line">    + <span class="string">" , 屏幕宽 : "</span> + metrics.widthPixels </span><br><span class="line">    + <span class="string">" , 屏幕长 : "</span> + metrics.heightPixels;</span><br><span class="line">  Toast.makeText(<span class="keyword">this</span>, msg, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="Android上支持的尺寸"><a href="#Android上支持的尺寸" class="headerlink" title="Android上支持的尺寸"></a>Android上支持的尺寸</h2><ul>
-<li><strong>dp（dip）</strong><br>Density-independent Pixels - An abstract unit that is based on the physical density of the screen.<br>Android特有的单位，在dpi = 160屏幕上，1dp = 1px。</li>
-<li><strong>sp</strong><br>Scale-independent Pixels - This is like the dp unit, but it is also scaled by the user’s font size preference.<br>跟dp差不过，唯一区别是会根据用户设置的字体偏好来。</li>
-<li>pt<br>Points - 1/72 of an inch based on the physical size of the screen.</li>
-<li>px<br>Pixels - Corresponds to actual pixels on the screen. </li>
-<li>mm<br>Millimeters - Based on the physical size of the screen.</li>
-<li>in<br>Inches - Based on the physical size of the screen.<h2 id="Android适配屏幕的一些技巧"><a href="#Android适配屏幕的一些技巧" class="headerlink" title="Android适配屏幕的一些技巧"></a>Android适配屏幕的一些技巧</h2></li>
-<li>使用 “dp” 和 “sp”</li>
-<li>使用 “wrap_content” 和 “match_parent”</li>
-<li>使用 “RelativeLayout”</li>
-<li>使用 “res” 的别名<br><img src="http://o8nhgt9v5.bkt.clouddn.com/res.png" alt=""></li>
-<li>使用xhdpi<br>drawable-ldpi (dpi=120, density=0.75)<br>drawable-mdpi (dpi=160, density=1)<br>drawable-hdpi (dpi=240, density=1.5)<br>drawable-xhdpi (dpi=320, density=2)<br>drawable-xxhdpi (dpi=480, density=3)<br>完全从适配角度来说，每种dpi都出一套图是最完美的，实际不可能，美工设计的工作量太大，导出的APK包也会太大。<br>解决方案是出一套1080*720的图，放到xhdpi下。Android虚拟机会根据设备dpi删除冲突的图，并选择匹配dpi的图，没有匹配的图，会找到最接近的dpi的图并按照比例进行缩放。根据现在市面上手机dpi大部分还是320，所以选择xhdpi。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/06/29/Android的适配/" rel="next" title="Android的适配">
+                <i class="fa fa-chevron-left"></i> Android的适配
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/06/12/Android-studio-设置/" itemprop="url">
-                  Android Studio 设置
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-12T17:52:41+08:00" content="2016-06-12">
-              2016-06-12
-            </time>
-          </span>
-
-          
-
-          
+              <a href="/2016/06/29/从源码看View的绘制二/" rel="prev" title="从源码看View的绘制(二)">
+                从源码看View的绘制(二) <i class="fa fa-chevron-right"></i>
+              </a>
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/12/Android-studio-设置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/12/Android-studio-设置/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/12/Android-studio-设置/" class="leancloud_visitors" data-flag-title="Android Studio 设置">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <blockquote>
-<p>本文涉及知识点：<br><em>Android Studio</em><br>本文作者使用的系统是 <strong>Ubuntu 16.04</strong></p>
-</blockquote>
-<p>现在的Android开发者肯定知道Android Studio，相关的基本教程网上也是很多了。本文主要是作者自己的一些设置的记录。</p>
-<ul>
-<li><a href="http://o8nhgt9v5.bkt.clouddn.com/settings.jar" target="_blank" rel="external">基本设置</a>，作者之前用Eclipse写Java和Android，所以这里的大部分keymap是用了Eclipse的。这里的设置适用于Eclipse转AS的同学。</li>
-<li><p>设置java文件的Copyright路径 ： <em>setting -&gt; File and Code Templates -&gt; Includes -&gt; File Header</em></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Copyright (c) $&#123;YEAR&#125;, Bongmi</span><br><span class="line"> * All rights reserved</span><br><span class="line"> * Author: beyondbright@gmail.com</span><br><span class="line">*/</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Ubuntu版本添加中文输入法，在studio.sh启动文件头部添加export</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export XMODIFIERS=&quot;@im=fcitx&quot;</span><br><span class="line">export GTK_IM_MODULE=&quot;fcitx&quot;</span><br><span class="line">export QT_IM_MODULE=&quot;fcitx&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://o8nhgt9v5.bkt.clouddn.com/1.png" alt="studio.sh"></p>
-<ul>
-<li>这里推荐一个在Android Studio上的<a href="https://github.com/Skykai521/ECTranslation" target="_blank" rel="external">翻译插件</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
+
+    <div class="post-spread">
       
+        <div class="ds-share flat" data-thread-key="2016/06/29/从源码看View的绘制/"
+     data-title="从源码看View的绘制(一)"
+     data-content=""
+     data-url="https://beyondbright.github.io/2016/06/29/从源码看View的绘制/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
 
-  
-  
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
 
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/11/hello-world/" itemprop="url">
-                  Hexo + Github 搭建博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T00:00:00+08:00" content="2016-06-11">
-              2016-06-11
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/11/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/11/hello-world/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/06/11/hello-world/" class="leancloud_visitors" data-flag-title="Hexo + Github 搭建博客">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">visitors </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文涉及知识点：<br><a href="https://hexo.io" target="_blank" rel="external">Hexo</a><br><a href="https://github.com" target="_blank" rel="external">Github</a><br>本文作者使用的系统是 <strong>Ubuntu 16.04</strong></p>
-</blockquote>
-<h3 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h3><ul>
-<li>登录<a href="https://github.com" target="_blank" rel="external">Github</a>后，点击右下角<a href="https://github.com/new" target="_blank" rel="external">New repository</a>创建仓库，<strong>Repository name</strong>必须按照<em>xxx.github.io</em>格式填写，这样该仓库才是<em>xxx.github.io</em>域名对应的空间（参考<a href="https://pages.github.com" target="_blank" rel="external">GithubPages</a>）。</li>
-</ul>
-<p><img src="http://o8nhgt9v5.bkt.clouddn.com/create%20a%20new%20repository.png" alt="new repository"></p>
-<ul>
-<li><p>安装<a href="https://git-scm.com" target="_blank" rel="external">Git</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>用<a href="https://help.github.com/categories/ssh/" target="_blank" rel="external">SSH</a>验证授权。添加<em>id_rsa.pub</em>内容到Github上，<em>Setting -&gt; SSH and GPG keys -&gt; New SSH key -&gt; Key -&gt; Add SSH key</em>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ssh</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://o8nhgt9v5.bkt.clouddn.com/ssh.png" alt="github页面"></p>
-<ul>
-<li>测试SSH配置的代码：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><ul>
-<li><p>安装<a href="https://nodejs.org" target="_blank" rel="external">Nodejs</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install nodejs</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装<a href="https://hexo.io" target="_blank" rel="external">Hexo</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/blog</span><br><span class="line"><span class="built_in">cd</span> ~/blog</span><br><span class="line">sudo npm install -g hexo</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>测试Hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/blog</span><br><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>浏览器输入：<em><a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a></em> 进行验证</p>
-</li>
-<li><p>自动部署到github上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/blog</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">vim _config.yml</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>找到deploy行进行修改，repo就是之前创建的Github的仓库</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">depoy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:xxx/xxx.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署到Github上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>浏览器输入：<em><a href="http://xxx.github.io" target="_blank" rel="external">http://xxx.github.io</a></em> 进行验证</p>
-</li>
-<li>安装主题<a href="http://theme-next.iissnan.com/" target="_blank" rel="external">NexT</a></li>
-<li>如果是用vim编辑内容的话，推荐几个插件<br>– <a href="https://github.com/suan/vim-instant-markdown" target="_blank" rel="external">实时预览</a><br>– <a href="https://github.com/altercation/vim-colors-solarized" target="_blank" rel="external">vim主题</a><br>– <a href="https://github.com/plasticboy/vim-markdown" target="_blank" rel="external">vim-markdown-highlight</a><br>– <a href="https://github.com/tpope/vim-markdown" target="_blank" rel="external">vim-markdown</a></li>
-</ul>
-
-          
-        
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -933,6 +441,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/29/从源码看View的绘制/"
+           data-title="从源码看View的绘制(一)" data-url="https://beyondbright.github.io/2016/06/29/从源码看View的绘制/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -952,8 +468,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://q.qlogo.cn/qqapp/100229475/A7B969A7097211A99634BDF716F3CA36/100"
@@ -1030,6 +555,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1133,6 +669,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
